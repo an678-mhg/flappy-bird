@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://cqrh0cr0pmyyi"]
+
+[ext_resource type="Script" uid="uid://mij3vkcfroyu" path="res://Scenes/game.gd" id="1_3dryh"]
+[ext_resource type="PackedScene" uid="uid://c2hlw1uirm6g" path="res://Scenes/background.tscn" id="1_ebmjs"]
+[ext_resource type="PackedScene" uid="uid://btxswelfhuqed" path="res://Scenes/bird.tscn" id="2_qxrlw"]
+[ext_resource type="PackedScene" uid="uid://cqpimsv52ch10" path="res://Scenes/base.tscn" id="3_wrm1d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3dryh"]
+size = Vector2(290, 97)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wowpa"]
+size = Vector2(288, 77)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_3dryh")
+metadata/_edit_vertical_guides_ = [0.0, 289.0]
+metadata/_edit_horizontal_guides_ = [0.0, 513.0]
+
+[node name="PipeTimer" type="Node" parent="."]
+
+[node name="Timer" type="Timer" parent="PipeTimer"]
+
+[node name="Objects" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Background" parent="Objects" instance=ExtResource("1_ebmjs")]
+
+[node name="Bird" parent="Objects" instance=ExtResource("2_qxrlw")]
+position = Vector2(136, 243)
+
+[node name="Base" parent="Objects" instance=ExtResource("3_wrm1d")]
+position = Vector2(0, 416)
+
+[node name="PipePosition" type="Marker2D" parent="."]
+position = Vector2(309, 237)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-2, 0)
+zoom = Vector2(2.5, 2.5)
+limit_left = 0
+limit_top = 0
+
+[node name="DeadZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadZone"]
+position = Vector2(144, 461.5)
+shape = SubResource("RectangleShape2D_3dryh")
+
+[node name="Top" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top"]
+position = Vector2(145, -38.5)
+shape = SubResource("RectangleShape2D_wowpa")
+
+[connection signal="timeout" from="PipeTimer/Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="DeadZone" to="." method="_on_dead_zone_body_entered"]

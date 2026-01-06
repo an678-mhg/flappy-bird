@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://dvwy4mu6351xe"]
+
+[ext_resource type="Script" uid="uid://dvhumnso42awt" path="res://Scenes/pipe.gd" id="1_hnit7"]
+[ext_resource type="Texture2D" uid="uid://b4q7cd7ugnis8" path="res://Game Objects/pipe-green.png" id="1_n21g0"]
+[ext_resource type="AudioStream" uid="uid://bc5bdxtcuvgh3" path="res://Sound Efects/point.ogg" id="3_p1buf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hnit7"]
+size = Vector2(20, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6svvj"]
+size = Vector2(20, 57)
+
+[node name="Pipe" type="Node2D"]
+script = ExtResource("1_hnit7")
+
+[node name="Bottom" type="Area2D" parent="."]
+
+[node name="PipeGreen" type="Sprite2D" parent="Bottom"]
+position = Vector2(11.000001, 100)
+scale = Vector2(0.3846154, 0.62500006)
+texture = ExtResource("1_n21g0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom"]
+position = Vector2(11, 100)
+shape = SubResource("RectangleShape2D_hnit7")
+
+[node name="Top" type="Area2D" parent="."]
+position = Vector2(21, -60)
+rotation = 3.1415927
+
+[node name="PipeGreen" type="Sprite2D" parent="Top"]
+position = Vector2(11.000001, 100)
+scale = Vector2(0.3846154, 0.62500006)
+texture = ExtResource("1_n21g0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top"]
+position = Vector2(11, 100)
+shape = SubResource("RectangleShape2D_hnit7")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(0, -264, 24, 464)
+
+[node name="ScoreAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_p1buf")
+
+[node name="ScoreZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreZone"]
+position = Vector2(11, -30)
+shape = SubResource("RectangleShape2D_6svvj")
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="body_entered" from="ScoreZone" to="." method="_on_score_zone_body_entered"]

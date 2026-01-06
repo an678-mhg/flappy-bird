@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2hlw1uirm6g"]
+
+[ext_resource type="Texture2D" uid="uid://c1dton7wvjylb" path="res://Game Objects/background-day.png" id="1_sn1xx"]
+
+[node name="Background" type="Node2D"]
+
+[node name="BackgroundDay" type="Sprite2D" parent="."]
+position = Vector2(144, 256)
+texture = ExtResource("1_sn1xx")
